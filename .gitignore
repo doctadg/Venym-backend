@@ -17,3 +17,7 @@ venv/
 
 # Django specific
 *.sqlite3
+
+# Specifically ignore large log files
+backend/logs/raydium_monitor.log
+backend/logs/raydium_monitor_debug.log
