@@ -1,25 +1,6 @@
-# Ignore all log files
 *.log
-*.log.*
-
-# Ignore log directories
-logs/
-**/logs/
-
-# Python cache files
+backend/logs/
+backend/raydium_monitor/tracked_addresses.pkl
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environment
-venv/
-.venv/
-
-# Django specific
-*.sqlite3
-
-# Specifically ignore large log files
-backend/raydium_monitor.log
-backend/raydium_monitor/raydium_monitor.log
-backend/logs/raydium_monitor.log
-backend/logs/raydium_monitor_debug.log
+*.pyc
+.env

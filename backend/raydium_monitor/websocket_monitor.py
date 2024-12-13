@@ -39,24 +39,56 @@ UPSTASH_ENDPOINT = os.getenv('UPSTASH_ENDPOINT')
 UPSTASH_PASSWORD = os.getenv('UPSTASH_PASSWORD')
 UPSTASH_PORT = os.getenv('UPSTASH_PORT')
 
-# Address tracking file
-ADDRESS_TRACKING_FILE = '/home/user/venym-ai-backend/backend/raydium_monitor/tracked_addresses.pkl'
+# Address tracking file - configurable via environment variable
+DEFAULT_TRACKING_FILE = '/home/user/venym-ai-backend/backend/raydium_monitor/tracked_addresses.pkl'
+ADDRESS_TRACKING_FILE = os.getenv('ADDRESS_TRACKING_FILE', DEFAULT_TRACKING_FILE)
 
-def load_tracked_addresses():
-    """Load previously tracked addresses from a pickle file"""
+def ensure_tracking_file_exists(file_path=None):
+    """Ensure the tracking file exists with proper permissions"""
+    tracking_file = file_path or ADDRESS_TRACKING_FILE
     try:
-        if os.path.exists(ADDRESS_TRACKING_FILE):
-            with open(ADDRESS_TRACKING_FILE, 'rb') as f:
-                return pickle.load(f)
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(tracking_file), exist_ok=True)
+        
+        # Create the file if it doesn't exist
+        if not os.path.exists(tracking_file):
+            with open(tracking_file, 'wb') as f:
+                # Initialize with an empty set
+                pickle.dump(set(), f)
+            
+            # Set read/write permissions for all users
+            os.chmod(tracking_file, 0o666)
+            logger.info(f"Created tracking file: {tracking_file}")
+        
+        return tracking_file
+    except Exception as e:
+        logger.error(f"Error ensuring tracking file exists: {e}")
+        return None
+
+def load_tracked_addresses(file_path=None):
+    """Load previously tracked addresses from a pickle file"""
+    tracking_file = ensure_tracking_file_exists(file_path)
+    
+    if not tracking_file:
         return set()
+    
+    try:
+        with open(tracking_file, 'rb') as f:
+            # If file is empty, return an empty set
+            try:
+                return pickle.load(f)
+            except EOFError:
+                return set()
     except Exception as e:
         logger.error(f"Error loading tracked addresses: {e}")
         return set()
 
-def save_tracked_addresses(addresses):
+def save_tracked_addresses(addresses, file_path=None):
     """Save tracked addresses to a pickle file"""
+    tracking_file = file_path or ADDRESS_TRACKING_FILE
+    
     try:
-        with open(ADDRESS_TRACKING_FILE, 'wb') as f:
+        with open(tracking_file, 'wb') as f:
             pickle.dump(addresses, f)
     except Exception as e:
         logger.error(f"Error saving tracked addresses: {e}")
