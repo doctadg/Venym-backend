@@ -1,0 +1,4 @@
+[console_scripts]
+websocks=websocks.commands:main
+websocks-gui=websocks.gui:main
+

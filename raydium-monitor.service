@@ -1,0 +1,17 @@
+[Unit]
+Description=Raydium AMM WebSocket Monitor
+After=network.target
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/venym-ai-backend/backend
+Environment=PYTHONPATH=/home/user/venym-ai-backend/backend
+ExecStart=/home/user/venym-ai-backend/venv/bin/python /home/user/venym-ai-backend/backend/raydium_monitor/websocket_monitor.py
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/user/venym-ai-backend/backend/logs/raydium_monitor_service.log
+StandardError=append:/home/user/venym-ai-backend/backend/logs/raydium_monitor_service_error.log
+
+[Install]
+WantedBy=multi-user.target
