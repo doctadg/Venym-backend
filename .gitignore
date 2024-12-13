@@ -19,5 +19,7 @@ venv/
 *.sqlite3
 
 # Specifically ignore large log files
+backend/raydium_monitor.log
+backend/raydium_monitor/raydium_monitor.log
 backend/logs/raydium_monitor.log
 backend/logs/raydium_monitor_debug.log

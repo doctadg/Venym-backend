@@ -15,11 +15,15 @@ import websockets
 # Load environment variables
 load_dotenv()
 
+# Ensure logs directory exists and create full path to log file
+log_file_path = '/home/user/venym-ai-backend/backend/logs/raydium_monitor.log'
+os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='/home/user/venym-ai-backend/backend/logs/raydium_monitor.log',
+    filename=log_file_path,
     filemode='a'
 )
 logger = logging.getLogger(__name__)
