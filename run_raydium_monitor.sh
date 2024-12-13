@@ -7,8 +7,10 @@ cd backend
 # Activate virtual environment
 source ../venv/bin/activate
 
+pip3 install -r raydium_monitor/requirements.txt
+
 # Run the Raydium monitor
-python -m raydium_monitor.websocket_monitor
+python3 -m raydium_monitor.websocket_monitor
 
 # Deactivate virtual environment
 deactivate
