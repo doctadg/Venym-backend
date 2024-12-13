@@ -4,11 +4,11 @@ set -e
 # Navigate to the backend directory
 cd backend
 
-
 # Activate virtual environment
 source ../venv/bin/activate
 
-pip3 install -r backend/requirements.txt
+# Install requirements from the root directory
+pip3 install -r ../requirements.txt
 
 # Run the Raydium monitor
 python3 -m raydium_monitor.websocket_monitor
