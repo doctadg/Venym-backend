@@ -1,2 +1,19 @@
-.venv
-__pycache__
+# Ignore all log files
+*.log
+*.log.*
+
+# Ignore log directories
+logs/
+**/logs/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.venv/
+
+# Django specific
+*.sqlite3
